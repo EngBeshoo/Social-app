@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import PostCard from '../card/postCard'
+import PostCard from '../card/PostCard'
 import { getAllPosts } from '../services/postApi'
 import Loading from '../componets/Loading/Loading'
 import CreatePost from '../card/CreatePost'

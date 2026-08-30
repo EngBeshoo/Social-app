@@ -11,6 +11,9 @@ import Notfound from "./componets/Notfound/Notfound";
 import { CounterContextProvider } from "./context/counterContext";
 import { AuthContext, AuthProvider } from "./context/authContext";
 import ProtectRoute from "./pages/ProtectRoute";
+ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+ const queryClient = new QueryClient()
 
 
 let router = createBrowserRouter([
@@ -27,6 +30,7 @@ let router = createBrowserRouter([
 function App() {
   return (
     <>
+    <QueryClientProvider client={queryClient}>
       <HeroUIProvider>
         <AuthProvider>
         <CounterContextProvider>
@@ -34,6 +38,8 @@ function App() {
         </CounterContextProvider>
         </AuthProvider>
       </HeroUIProvider>
+    </QueryClientProvider>
+
     </>
   );
 }

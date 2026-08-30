@@ -1,4 +1,3 @@
-// في PostCard.jsx
 import React, { useEffect, useState } from 'react'
 import { getComment, createComment as createCommentAPI } from '../services/commentApi'
 import CommentPosts from './CommentPosts'
