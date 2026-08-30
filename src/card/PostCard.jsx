@@ -14,10 +14,7 @@ export default function PostCard({post}) {
     const [loading, setLoading] = useState(false)
     const [commentContent, setCommentContent] = useState('')
     const [submitting, setSubmitting] = useState(false)
-
-    console.log('User Name:', getUserName())
     
-
    
     async function getComments() {
         if (!post?.id) return
@@ -25,7 +22,7 @@ export default function PostCard({post}) {
         setLoading(true)
         try {
             const data = await getComment(post.id)
-            console.log(`Comments for post ${post.id}:`, data)
+            
             setComments(data || []) 
         } catch (error) {
             console.error('Error fetching comments:', error)

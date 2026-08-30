@@ -32,14 +32,13 @@ export default function Login() {
 
   useEffect(() => {
     const users = localStorage.getItem('registeredUsers');
-    console.log("📦 Current users in localStorage:", users ? JSON.parse(users) : []);
+   
   }, []);
 
   async function submitForm(userData) {
     setApiError(null);
     setSuccessMessage("");
 
-    try {
       const data = await signin(userData);
       console.log("✅ Login Success:", data);
 
@@ -47,13 +46,9 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       setSuccessMessage("Login successful! Welcome back 🎉");
-      setuserToken(data.token)
       navigate('/home');
     
-    } catch (error) {
-      console.error("❌ Login Error:", error);
-      setApiError(error.message || "Login failed. Please try again.");
-    }
+    
   }
 
   return (
