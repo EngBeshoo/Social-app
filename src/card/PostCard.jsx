@@ -3,8 +3,8 @@ import { getComment, createComment as createCommentAPI } from '../services/comme
 import CommentPosts from './CommentPosts'
 import { Link } from 'react-router-dom'
 import { Button, Input } from '@heroui/react'
-import { useAuth } from '../context/AuthContext'
-import DropDown from '../componets/DropDown/DropDown'
+import { useAuth } from '../context/authContext'
+import DropDown from '../components/DropDown/DropDown'
 
 export default function PostCard({post}) {
     const { userData, getUserName, getUserAvatar } = useAuth()
