@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PostCard from '../card/PostCard'
 import { getAllPosts } from '../services/postApi'
-import Loading from '../componets/Loading/Loading'
+import Loading from '../components/Loading/Loading'
 import CreatePost from '../card/CreatePost'
 
 export default function Home() {
