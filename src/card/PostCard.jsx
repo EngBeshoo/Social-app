@@ -1,20 +1,45 @@
+// في PostCard.jsx
 import React, { useEffect, useState } from 'react'
 import { getComment, createComment as createCommentAPI } from '../services/commentApi'
 import CommentPosts from './CommentPosts'
 import { Link } from 'react-router-dom'
 import { Button, Input } from '@heroui/react'
 import { useAuth } from '../context/AuthContext'
+import DropDown from '../componets/DropDown/DropDown'
 
 export default function PostCard({post}) {
-
     const { userData, getUserName, getUserAvatar } = useAuth()
-    
     const avatarUrl = `https://i.pravatar.cc/150?img=${post.id % 70 || 1}`
     const [showComment, setShowComment] = useState(false)
     const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false)
     const [commentContent, setCommentContent] = useState('')
     const [submitting, setSubmitting] = useState(false)
+
+    console.log('User Name:', getUserName())
+    
+
+   
+    async function getComments() {
+        if (!post?.id) return
+        
+        setLoading(true)
+        try {
+            const data = await getComment(post.id)
+            console.log(`Comments for post ${post.id}:`, data)
+            setComments(data || []) 
+        } catch (error) {
+            console.error('Error fetching comments:', error)
+            setComments([])
+        } finally {
+            setLoading(false)
+        }
+    }
+
+   
+    function handleCommentDeleted() {
+        getComments() 
+    }
 
     async function handleCreateComment(e) {
         e.preventDefault()
@@ -26,7 +51,6 @@ export default function PostCard({post}) {
 
         setSubmitting(true)
         try {
-       
             const response = await createCommentAPI(post.id, {
                 name: getUserName(),
                 email: userData?.email || 'user@example.com',
@@ -46,22 +70,6 @@ export default function PostCard({post}) {
         }
     }
 
-    async function getComments() {
-        if (!post?.id) return
-        
-        setLoading(true)
-        try {
-            const data = await getComment(post.id)
-            console.log(`Comments for post ${post.id}:`, data)
-            setComments(data || []) 
-        } catch (error) {
-            console.error('Error fetching comments:', error)
-            setComments([])
-        } finally {
-            setLoading(false)
-        }
-    }
-
     useEffect(() => {
         getComments()
     }, [post?.id]) 
@@ -70,14 +78,13 @@ export default function PostCard({post}) {
         setShowComment(!showComment)
     }
 
-    
+    const isOwner = userData?.id === post?.userId || userData?.userId === post?.userId
     const userAvatar = getUserAvatar()
 
     return (
         <div className="w-full flex flex-col px-3 py-3 lg:px-10">
             <div className="w-4/6 mx-auto">
                 <div className="bg-white w-full rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 h-auto py-3 px-4 my-4 border border-gray-100">
-               
                     <div className="w-full h-16 items-center flex justify-between">
                         <div className="flex items-center">
                             <img 
@@ -87,7 +94,7 @@ export default function PostCard({post}) {
                             />
                             <div>    
                                 <h3 className="text-md font-semibold text-gray-800 hover:text-blue-600 transition-colors">
-                                    {post.title?.split(' ').slice(0,2).join(' ') || 'User'}
+                                    {post.title.split(' ').slice(0,2).join(' ') || 'User'}
                                 </h3>
                                 <div className="flex items-center gap-2">
                                     <p className="text-xs text-gray-500">📅 created at</p>
@@ -97,11 +104,7 @@ export default function PostCard({post}) {
                             </div>
                         </div>
                         
-                        <button className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                        </button>
+                        <DropDown post={post} />
                     </div>
 
                     <div className="my-3 px-1">
@@ -154,12 +157,11 @@ export default function PostCard({post}) {
                     
                     <hr className="my-2 border-gray-200" />
                     
-                   
                     <div className="w-full mb-3">
                         <form onSubmit={handleCreateComment} className='flex gap-2 items-center'>
                             <img 
                                 className="rounded-full w-8 h-8 object-cover border-2 border-gray-200 flex-shrink-0" 
-                                src={userAvatar} // ← صورة المستخدم
+                                src={userAvatar}
                                 alt="Your avatar"
                             />
                             <Input 
@@ -223,7 +225,11 @@ export default function PostCard({post}) {
                             ) : (
                                 <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
                                     {comments.map((comment) => (
-                                        <CommentPosts key={comment.id} comment={comment} />
+                                        <CommentPosts 
+                                            key={comment.id} 
+                                            comment={comment}
+                                            onCommentDeleted={handleCommentDeleted} // ✅ تمرير callback
+                                        />
                                     ))}
                                 </div>
                             )}

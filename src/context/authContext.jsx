@@ -6,6 +6,8 @@ export function AuthProvider({ children }) {
   const [userToken, setUserToken] = useState(null);
   const [userData, setUserData] = useState(null);
 
+  
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
@@ -42,13 +44,13 @@ export function AuthProvider({ children }) {
     
 
     getUserName: () => {
-      return userData?.firstName || userData?.name || 'User';
+      return userData?.firstName 
     },
     getUserFullName: () => {
       if (userData?.firstName && userData?.lastName) {
         return `${userData.firstName} ${userData.lastName}`;
       }
-      return userData?.name || userData?.firstName || 'User';
+      return  userData?.firstName ;
     },
     getUserEmail: () => {
       return userData?.email || '';

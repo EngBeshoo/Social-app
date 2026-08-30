@@ -28,7 +28,7 @@ export const AcmeLogo = () => {
 };
 
 export default function Navbar() {
-  let { userToken, logout } = useContext(AuthContext); 
+  let { userToken, logout ,userData ,getUserName ,getUserFullName ,getUserAvatar } = useContext(AuthContext); 
 
   return (
     <HeroNav>
@@ -75,7 +75,7 @@ export default function Navbar() {
                   color="danger"
                   onClick={logout} 
                 >
-                  Log Out
+                  Log Out { userData?.firstName }
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

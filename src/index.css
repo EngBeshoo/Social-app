@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @plugin './hero.js';
-@import "https://cdn.jsdelivr.net/npm/tailwindcss@4.1.18/index.css";
 
 /* Note: You may need to change the path to fit your project structure */
 @source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
