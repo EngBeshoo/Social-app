@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getSinglePosts } from '../services/postApi'
-import { getComment, createComment } from '../services/commentApi' // ← استورد createComment
+import { getComment, createComment } from '../services/commentApi'
 import { useParams, Link } from 'react-router-dom'
-import Loading from '../componets/Loading/Loading'
+import Loading from '../components/Loading/Loading'
 
 export default function SinglePost() {
     let { id } = useParams()

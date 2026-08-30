@@ -1,6 +1,6 @@
 import React from 'react'
-import DropDownComment from '../componets/DropDown/DropDownComment'
-import { useAuth } from '../context/AuthContext'
+import DropDownComment from '../components/DropDown/DropDownComment'
+import { useAuth } from '../context/authContext'
 
 export default function CommentPosts({ comment, onCommentDeleted }) {
     const { userData } = useAuth()

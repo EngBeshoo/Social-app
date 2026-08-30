@@ -1,13 +1,13 @@
 import { HeroUIProvider } from "@heroui/react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "./componets/Layout/Layout";
+import Layout from "./components/Layout/Layout";
 import Login from "./auth/Login/Login";
 import Home from "./pages/Home";
 import Register from "./auth/Register/Register";
 import Profile from "./pages/Profile";
 import SinglePost from "./pages/SinglePost";
-import Notfound from "./componets/Notfound/Notfound";
+import Notfound from "./components/Notfound/Notfound";
 import { CounterContextProvider } from "./context/counterContext";
 import { AuthContext, AuthProvider } from "./context/authContext";
 import ProtectRoute from "./pages/ProtectRoute";
